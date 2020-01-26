@@ -2,13 +2,13 @@
 from netmiko import Netmiko
 
 # Sending device ip's stored in a file 
-with open('devices_list') as f:
-    devices_list = f.read().splitlines()
+with open('device_list') as f:
+    device_list = f.read().splitlines()
 
 # Iterate through device list and configure the devices 
-for devices in devices_list:
-    print 'Connecting to device ' + devices
-    ip_address_of_device = devices
+for device in device_list:
+    print ('Connecting to device ' + device)
+    ip_address_of_device = device
     
     # SSH Connection details 
     ios_device = {
