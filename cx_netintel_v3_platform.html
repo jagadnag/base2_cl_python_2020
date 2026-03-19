@@ -1,0 +1,520 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap');
+:root{
+  --b0:#060a14;--b1:#0c1322;--b2:#121c32;--b3:#182542;--b4:#1f2f52;
+  --br0:#1a2744;--br1:#253560;
+  --t0:#f2f6ff;--t1:#c4d0e8;--t2:#8a9ec0;--t3:#5c7298;
+  --blue:#4c8dfc;--blue2:#6da6ff;--blueDim:rgba(76,141,252,.1);--blueGlow:rgba(76,141,252,.25);
+  --cyan:#0fd4e8;--cyanDim:rgba(15,212,232,.1);
+  --green:#2ecc8e;--greenDim:rgba(46,204,142,.1);
+  --amber:#f7b731;--amberDim:rgba(247,183,49,.1);
+  --red:#f25c5c;--redDim:rgba(242,92,92,.1);
+  --purple:#a17bfa;--purpleDim:rgba(161,123,250,.1);
+  --pink:#f472b6;--pinkDim:rgba(244,114,182,.1);
+  --orange:#fb923c;--orangeDim:rgba(251,146,60,.1);
+  --sw:240px;--th:52px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Outfit',sans-serif;background:var(--b0);color:var(--t0);overflow:hidden;height:100vh;font-size:13px}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--br0);border-radius:3px}
+
+.app{display:grid;grid-template-columns:var(--sw) 1fr;grid-template-rows:var(--th) 1fr;height:100vh}
+
+/* ═══ SIDEBAR ═══ */
+.sb{grid-row:1/-1;background:var(--b1);border-right:1px solid var(--br0);display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden}
+.sb-logo{padding:12px 16px;border-bottom:1px solid var(--br0);display:flex;align-items:center;gap:8px}
+.sb-mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--blue),var(--cyan));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:#fff;flex-shrink:0}
+.sb-brand{font-family:'Source Serif 4',serif;font-size:17px;font-weight:600;color:var(--t0)}
+.sb-ver{font-family:'Geist Mono',monospace;font-size:8px;color:var(--t3);background:var(--b3);padding:2px 5px;border-radius:3px;margin-left:auto}
+.sb-sec{padding:12px 10px 2px}
+.sb-lbl{font-family:'Geist Mono',monospace;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);padding:0 6px 6px}
+.ni{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:7px;font-size:12px;color:var(--t2);cursor:pointer;transition:all .12s;margin-bottom:1px;position:relative;white-space:nowrap}
+.ni:hover{background:var(--b3);color:var(--t1)}.ni.on{background:var(--blueDim);color:var(--blue)}
+.ni.on::before{content:'';position:absolute;left:0;top:5px;bottom:5px;width:2.5px;border-radius:0 2px 2px 0;background:var(--blue)}
+.ni .ic{width:16px;text-align:center;font-size:13px;flex-shrink:0}
+.ni .bd{margin-left:auto;font-family:'Geist Mono',monospace;font-size:8px;padding:1px 6px;border-radius:8px;font-weight:600}
+.bd-r{background:var(--redDim);color:var(--red)}.bd-a{background:var(--amberDim);color:var(--amber)}.bd-b{background:var(--blueDim);color:var(--blue)}.bd-g{background:var(--greenDim);color:var(--green)}
+.sb-ft{margin-top:auto;padding:10px;border-top:1px solid var(--br0)}
+.tenant{background:var(--b2);border:1px solid var(--br0);border-radius:7px;padding:8px 10px;display:flex;align-items:center;gap:7px;cursor:pointer}
+.tenant:hover{border-color:var(--br1)}
+.t-av{width:26px;height:26px;border-radius:6px;background:linear-gradient(135deg,var(--green),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#000;flex-shrink:0}
+.t-nm{font-size:11px;font-weight:600;color:var(--t0)}.t-id{font-family:'Geist Mono',monospace;font-size:8px;color:var(--t3)}
+
+/* ═══ TOPBAR ═══ */
+.tb{background:var(--b1);border-bottom:1px solid var(--br0);display:flex;align-items:center;padding:0 20px;gap:12px}
+.tb-title{font-family:'Source Serif 4',serif;font-size:16px;color:var(--t0);font-weight:600}
+.tb-crumb{font-family:'Geist Mono',monospace;font-size:9px;color:var(--t3);letter-spacing:.5px}
+.tb-acts{margin-left:auto;display:flex;align-items:center;gap:8px}
+.tb-btn{background:var(--b3);border:1px solid var(--br0);border-radius:7px;padding:6px 12px;font-size:11px;color:var(--t1);cursor:pointer;font-family:'Outfit',sans-serif;display:flex;align-items:center;gap:5px;transition:all .15s}
+.tb-btn:hover{border-color:var(--br1);background:var(--b4)}
+.tb-btn.pr{background:var(--blue);border-color:var(--blue);color:#fff}.tb-btn.pr:hover{opacity:.9}
+.tb-search{background:var(--b2);border:1px solid var(--br0);border-radius:7px;padding:6px 10px;font-size:11px;color:var(--t1);width:200px;font-family:'Outfit',sans-serif;outline:none}
+.tb-search:focus{border-color:var(--blue)}.tb-search::placeholder{color:var(--t3)}
+.bell{position:relative}.bell .dot{position:absolute;top:-2px;right:-2px;width:7px;height:7px;border-radius:50%;background:var(--red);border:2px solid var(--b1);animation:pulse 2s infinite}
+
+/* ═══ MAIN ═══ */
+.mn{overflow-y:auto;padding:20px;background:var(--b0)}
+
+/* ═══ PAGES ═══ */
+.pg{display:none;animation:fi .3s ease}.pg.on{display:block}
+
+/* ═══ METRIC CARDS ═══ */
+.mg{display:grid;gap:12px;margin-bottom:20px}
+.mg5{grid-template-columns:repeat(5,1fr)}.mg4{grid-template-columns:repeat(4,1fr)}.mg3{grid-template-columns:repeat(3,1fr)}.mg6{grid-template-columns:repeat(6,1fr)}
+.mc{background:var(--b1);border:1px solid var(--br0);border-radius:10px;padding:14px 16px;position:relative;overflow:hidden;transition:all .15s}
+.mc:hover{border-color:var(--br1);transform:translateY(-1px)}
+.mc::after{content:'';position:absolute;top:-10px;right:-10px;width:60px;height:60px;border-radius:50%;background:var(--glow,var(--blueDim));filter:blur(25px);opacity:.4;pointer-events:none}
+.mc-l{font-size:10px;color:var(--t3);margin-bottom:5px;letter-spacing:.3px;text-transform:uppercase}
+.mc-v{font-family:'Geist Mono',monospace;font-size:24px;font-weight:700;color:var(--vc,var(--t0));line-height:1}
+.mc-s{font-size:10px;color:var(--t2);margin-top:4px;display:flex;align-items:center;gap:3px}
+.mc-s .ch{font-family:'Geist Mono',monospace;font-weight:600}.up{color:var(--green)}.dn{color:var(--red)}
+
+/* ═══ CARDS ═══ */
+.cd{background:var(--b1);border:1px solid var(--br0);border-radius:10px;overflow:hidden}
+.cd-h{padding:14px 16px;border-bottom:1px solid var(--br0);display:flex;align-items:center;gap:8px}
+.cd-t{font-size:13px;font-weight:600;flex:1}
+.cd-bd{font-family:'Geist Mono',monospace;font-size:8px;padding:2px 7px;border-radius:4px;letter-spacing:.5px}
+.cd-body{padding:14px 16px}
+
+/* ═══ TABLES ═══ */
+.tbl-wrap{max-height:380px;overflow-y:auto}
+table.dt{width:100%;border-collapse:collapse;font-size:11px}
+table.dt th{text-align:left;padding:8px 12px;font-family:'Geist Mono',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--t3);background:var(--b2);border-bottom:1px solid var(--br0);font-weight:500;position:sticky;top:0;z-index:1}
+table.dt td{padding:8px 12px;border-bottom:1px solid rgba(26,39,68,.4);color:var(--t1)}
+table.dt tr:hover td{background:rgba(76,141,252,.02)}
+.mn-o{font-family:'Geist Mono',monospace;font-size:10px}
+.sp{display:inline-block;padding:1px 7px;border-radius:8px;font-family:'Geist Mono',monospace;font-size:8px;font-weight:600;letter-spacing:.3px}
+.sp-cr{background:var(--redDim);color:var(--red)}.sp-hi{background:var(--amberDim);color:var(--amber)}.sp-md{background:var(--orangeDim);color:var(--orange)}.sp-lo{background:var(--blueDim);color:var(--blue)}.sp-ok{background:var(--greenDim);color:var(--green)}
+.sp-eol{background:var(--redDim);color:var(--red)}.sp-eos{background:var(--amberDim);color:var(--amber)}.sp-act{background:var(--greenDim);color:var(--green)}
+
+/* ═══ GRID HELPERS ═══ */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px}
+.g23{display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-bottom:20px}
+.g32{display:grid;grid-template-columns:1fr 2fr;gap:12px;margin-bottom:20px}
+.mb{margin-bottom:20px}
+
+/* ═══ SECTION HEAD ═══ */
+.sh{margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.sh h2{font-size:15px;font-weight:600}
+
+/* ═══ ANOMALY/FEED ITEMS ═══ */
+.fi-list{display:flex;flex-direction:column;gap:8px}
+.fi-item{background:var(--b2);border:1px solid var(--br0);border-radius:8px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start;transition:all .15s;cursor:pointer}
+.fi-item:hover{border-color:var(--br1);background:var(--b3)}
+.fi-ic{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.fi-bd{flex:1}.fi-tt{font-size:11px;font-weight:600;color:var(--t0);margin-bottom:2px}
+.fi-ds{font-size:10px;color:var(--t2);line-height:1.5}
+.fi-mt{display:flex;gap:8px;margin-top:4px;font-family:'Geist Mono',monospace;font-size:8px;color:var(--t3)}
+.fi-sv{font-family:'Geist Mono',monospace;font-size:8px;font-weight:600;padding:2px 6px;border-radius:3px;align-self:flex-start;margin-top:2px;flex-shrink:0}
+
+/* ═══ TIMELINE ═══ */
+.tl{position:relative;padding-left:20px}.tl::before{content:'';position:absolute;left:5px;top:3px;bottom:3px;width:2px;background:var(--br0)}
+.tl-i{position:relative;padding-bottom:16px}.tl-dot{position:absolute;left:-18px;top:3px;width:10px;height:10px;border-radius:50%;border:2px solid var(--b1)}
+.tl-c{padding-left:6px}.tl-t{font-family:'Geist Mono',monospace;font-size:8px;color:var(--t3);margin-bottom:1px;letter-spacing:.3px}
+.tl-tx{font-size:11px;color:var(--t1);line-height:1.5}
+
+/* ═══ PIPELINE STEPS ═══ */
+.pipe{display:flex;gap:0;margin:16px 0;overflow-x:auto;padding-bottom:6px}
+.pipe-s{display:flex;align-items:center;flex-shrink:0}
+.pipe-n{background:var(--b1);border:1px solid var(--br0);border-radius:8px;padding:10px 14px;text-align:center;min-width:110px;transition:all .15s}
+.pipe-n:hover{border-color:rgba(76,141,252,.3);transform:translateY(-1px)}
+.pipe-sn{font-family:'Geist Mono',monospace;font-size:8px;color:var(--cyan);letter-spacing:.8px;display:block;margin-bottom:2px}
+.pipe-nm{font-size:11px;font-weight:600;color:var(--t0)}.pipe-dt{font-size:9px;color:var(--t3);margin-top:1px}
+.pipe-c{width:24px;height:2px;background:var(--br0);position:relative;flex-shrink:0}
+.pipe-c::after{content:'';position:absolute;right:-2px;top:-3px;border:4px solid transparent;border-left-color:var(--t3)}
+
+/* ═══ FILTER CHIPS ═══ */
+.fc{font-size:9px;padding:3px 9px;border-radius:14px;border:1px solid var(--br0);color:var(--t2);cursor:pointer;transition:all .12s;background:transparent;font-family:'Outfit',sans-serif}
+.fc:hover,.fc.on{border-color:var(--blue);color:var(--blue);background:var(--blueDim)}
+
+/* ═══ BAR CHART ═══ */
+.bc{display:flex;align-items:flex-end;gap:6px;height:150px;padding-top:16px}
+.bc-g{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.bar{width:100%;border-radius:3px 3px 0 0;transition:height .6s cubic-bezier(.34,1.56,.64,1);position:relative;min-height:3px;cursor:pointer}
+.bar:hover{opacity:.8}
+.bc-l{font-size:8px;color:var(--t3);font-family:'Geist Mono',monospace}
+.bar-v{position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-family:'Geist Mono',monospace;font-size:8px;color:var(--t2);white-space:nowrap}
+
+/* ═══ DONUT ═══ */
+.don-c{display:flex;align-items:center;gap:20px}
+.don{width:130px;height:130px;border-radius:50%;position:relative;flex-shrink:0}
+.don-hole{position:absolute;inset:26px;border-radius:50%;background:var(--b1);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.don-hole .big{font-family:'Geist Mono',monospace;font-size:20px;font-weight:700}.don-hole .sm{font-size:9px;color:var(--t3)}
+.don-leg{display:flex;flex-direction:column;gap:6px}
+.leg-i{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--t2)}
+.leg-d{width:7px;height:7px;border-radius:2px;flex-shrink:0}
+
+/* ═══ HEALTH GAUGE ═══ */
+.gauge{width:120px;height:120px;position:relative;margin:0 auto}
+.gauge svg{transform:rotate(-90deg)}
+.gauge-val{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.gauge-num{font-family:'Geist Mono',monospace;font-size:28px;font-weight:700}
+.gauge-lbl{font-size:9px;color:var(--t3)}
+
+/* ═══ KB CARDS ═══ */
+.kb-card{background:var(--b2);border:1px solid var(--br0);border-radius:8px;padding:14px;transition:all .15s;cursor:pointer}
+.kb-card:hover{border-color:var(--br1)}
+.kb-tag{font-family:'Geist Mono',monospace;font-size:8px;padding:1px 6px;border-radius:3px;margin-right:4px}
+
+/* ═══ AI CHAT ═══ */
+.ai-p{background:var(--b1);border:1px solid var(--br0);border-radius:10px;display:flex;flex-direction:column;height:400px}
+.ai-hd{padding:10px 14px;border-bottom:1px solid var(--br0);display:flex;align-items:center;gap:8px}
+.ai-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+.ai-ms{flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:10px}
+.ai-m{max-width:85%;padding:8px 12px;border-radius:8px;font-size:11px;line-height:1.6;color:var(--t1)}
+.ai-m.ast{background:var(--b2);border:1px solid var(--br0);align-self:flex-start}
+.ai-m.usr{background:var(--blueDim);border:1px solid rgba(76,141,252,.15);align-self:flex-end;color:var(--blue2)}
+.ai-m .al{font-family:'Geist Mono',monospace;font-size:7px;color:var(--t3);margin-bottom:2px;display:block;letter-spacing:.5px}
+.ai-ir{padding:10px 12px;border-top:1px solid var(--br0);display:flex;gap:6px}
+.ai-in{flex:1;background:var(--b2);border:1px solid var(--br0);border-radius:7px;padding:7px 10px;font-size:11px;color:var(--t0);outline:none;font-family:'Outfit',sans-serif}
+.ai-in::placeholder{color:var(--t3)}.ai-in:focus{border-color:var(--blue)}
+.ai-sn{background:var(--blue);border:none;border-radius:7px;padding:7px 14px;color:#fff;cursor:pointer;font-size:11px;font-family:'Outfit',sans-serif;font-weight:600}
+
+/* ═══ UPLOAD ═══ */
+.upl{border:2px dashed var(--br1);border-radius:10px;padding:36px;text-align:center;cursor:pointer;transition:all .15s;background:var(--b1)}
+.upl:hover{border-color:var(--blue);background:var(--blueDim)}
+.upl .uic{font-size:28px;margin-bottom:8px}.upl h3{font-size:13px;font-weight:600;margin-bottom:2px}.upl p{font-size:10px;color:var(--t2)}
+
+/* ═══ PROGRESS BAR ═══ */
+.pbar{height:6px;background:var(--b3);border-radius:3px;overflow:hidden;margin:6px 0}
+.pbar-f{height:100%;border-radius:3px;transition:width .6s}
+
+/* ═══ ANIMATIONS ═══ */
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.stg>*{animation:fi .35s ease both}
+.stg>*:nth-child(1){animation-delay:.04s}.stg>*:nth-child(2){animation-delay:.08s}.stg>*:nth-child(3){animation-delay:.12s}.stg>*:nth-child(4){animation-delay:.16s}.stg>*:nth-child(5){animation-delay:.2s}.stg>*:nth-child(6){animation-delay:.24s}
+</style>
+
+<div class="app">
+
+<!-- ═══ SIDEBAR ═══ -->
+<aside class="sb">
+<div class="sb-logo"><div class="sb-mark">CX</div><span class="sb-brand">NetIntel</span><span class="sb-ver">v3.0</span></div>
+
+<div class="sb-sec"><div class="sb-lbl">Command Center</div>
+<div class="ni on" onclick="nav('cmd',this)"><span class="ic">🎯</span> Command Center</div>
+</div>
+
+<div class="sb-sec"><div class="sb-lbl">Asset Management</div>
+<div class="ni" onclick="nav('inv',this)"><span class="ic">🖥️</span> Inventory<span class="bd bd-b">1,247</span></div>
+</div>
+
+<div class="sb-sec"><div class="sb-lbl">Risk & Compliance</div>
+<div class="ni" onclick="nav('hweol',this)"><span class="ic">⏳</span> HW End-of-Life<span class="bd bd-a">179</span></div>
+<div class="ni" onclick="nav('sweol',this)"><span class="ic">💿</span> SW End-of-Life<span class="bd bd-a">94</span></div>
+<div class="ni" onclick="nav('fn',this)"><span class="ic">📋</span> Field Notices<span class="bd bd-r">8</span></div>
+<div class="ni" onclick="nav('vuln',this)"><span class="ic">🛡️</span> Security Vulns<span class="bd bd-r">23</span></div>
+<div class="ni" onclick="nav('swconf',this)"><span class="ic">✅</span> SW Conformance<span class="bd bd-a">67</span></div>
+</div>
+
+<div class="sb-sec"><div class="sb-lbl">Operations</div>
+<div class="ni" onclick="nav('health',this)"><span class="ic">💓</span> Network Health<span class="bd bd-g">89%</span></div>
+<div class="ni" onclick="nav('config',this)"><span class="ic">⚙️</span> Config Mgmt</div>
+<div class="ni" onclick="nav('remed',this)"><span class="ic">🔧</span> Remediation<span class="bd bd-r">12</span></div>
+</div>
+
+<div class="sb-sec"><div class="sb-lbl">Intelligence</div>
+<div class="ni" onclick="nav('kb',this)"><span class="ic">📚</span> Knowledge Base<span class="bd bd-g">142</span></div>
+<div class="ni" onclick="nav('rpt',this)"><span class="ic">📄</span> Reports</div>
+<div class="ni" onclick="nav('ai',this)"><span class="ic">🤖</span> AI Assistant</div>
+</div>
+
+<div class="sb-ft">
+<div class="tenant"><div class="t-av">AC</div><div><div class="t-nm">Acme Corp</div><div class="t-id">tenant_acme_001</div></div><span style="color:var(--t3)">⌄</span></div>
+</div>
+</aside>
+
+<!-- ═══ TOPBAR ═══ -->
+<header class="tb">
+<span class="tb-title" id="pTitle">Command Center</span>
+<span class="tb-crumb" id="pCrumb">ACME CORP › OVERVIEW</span>
+<div class="tb-acts">
+<input class="tb-search" placeholder="Search devices, CVEs, configs..." />
+<div class="tb-btn bell" onclick="nav('remed',document.querySelectorAll('.ni')[10])">🔔<div class="dot"></div></div>
+<div class="tb-btn">📅 Last scan: 18m ago</div>
+<div class="tb-btn pr" onclick="nav('inv',document.querySelectorAll('.ni')[1])">+ New Assessment</div>
+</div>
+</header>
+
+<!-- ═══ MAIN ═══ -->
+<main class="mn">
+
+<!-- ═══ PAGE: COMMAND CENTER ═══ -->
+<div class="pg on" id="pg-cmd">
+<div class="mg mg6 stg">
+<div class="mc" style="--glow:var(--blueDim)"><div class="mc-l">Total Assets</div><div class="mc-v">1,247</div><div class="mc-s"><span class="ch up">↑38</span> new</div></div>
+<div class="mc" style="--glow:var(--redDim)"><div class="mc-l">Critical Risk</div><div class="mc-v" style="--vc:var(--red)">47</div><div class="mc-s"><span class="ch dn">↑3</span> this week</div></div>
+<div class="mc" style="--glow:var(--amberDim)"><div class="mc-l">HW/SW EoL</div><div class="mc-v" style="--vc:var(--amber)">179</div><div class="mc-s">14.3% of fleet</div></div>
+<div class="mc" style="--glow:var(--purpleDim)"><div class="mc-l">Open CVEs</div><div class="mc-v" style="--vc:var(--purple)">23</div><div class="mc-s">5 Critical/High</div></div>
+<div class="mc" style="--glow:var(--orangeDim)"><div class="mc-l">Pending Fixes</div><div class="mc-v" style="--vc:var(--orange)">12</div><div class="mc-s">3 in pipeline</div></div>
+<div class="mc" style="--glow:var(--greenDim)"><div class="mc-l">Health Score</div><div class="mc-v" style="--vc:var(--green)">72<span style="font-size:14px">/100</span></div><div class="mc-s"><span class="ch up">↑4</span> vs last month</div></div>
+</div>
+
+<div class="g23">
+<div class="cd"><div class="cd-h"><span class="cd-t">Risk Distribution by Site</span><span class="cd-bd" style="background:var(--blueDim);color:var(--blue)">LIVE</span></div><div class="cd-body"><div class="bc" id="sChart"></div></div></div>
+<div class="cd"><div class="cd-h"><span class="cd-t">Risk Categories</span></div><div class="cd-body">
+<div class="don-c">
+<div class="don" style="background:conic-gradient(var(--red) 0% 4%,var(--amber) 4% 15%,var(--orange) 15% 36%,var(--blue) 36% 63%,var(--green) 63% 100%)"><div class="don-hole"><span class="big">1,247</span><span class="sm">devices</span></div></div>
+<div class="don-leg"><div class="leg-i"><div class="leg-d" style="background:var(--red)"></div>Critical — 47</div><div class="leg-i"><div class="leg-d" style="background:var(--amber)"></div>High — 132</div><div class="leg-i"><div class="leg-d" style="background:var(--orange)"></div>Medium — 258</div><div class="leg-i"><div class="leg-d" style="background:var(--blue)"></div>Low — 341</div><div class="leg-i"><div class="leg-d" style="background:var(--green)"></div>Minimal — 469</div></div>
+</div></div></div>
+</div>
+
+<div class="g2">
+<div class="cd"><div class="cd-h"><span class="cd-t">🔥 Top Critical Assets</span></div>
+<div class="tbl-wrap"><table class="dt"><thead><tr><th>Hostname</th><th>Model</th><th>Site</th><th>Risk</th><th>Issues</th></tr></thead><tbody>
+<tr><td class="mn-o">FW-EDGE-02</td><td class="mn-o">ASA5525-K9</td><td>Chicago-BR</td><td><span class="sp sp-cr">95</span></td><td>HW EoS + CVE-2026-20198 (9.8)</td></tr>
+<tr><td class="mn-o">CORE-RTR-01</td><td class="mn-o">ISR4451-X/K9</td><td>Dallas-DC1</td><td><span class="sp sp-cr">92</span></td><td>HW EoS + 3 Critical CVEs</td></tr>
+<tr><td class="mn-o">DIST-SW-03</td><td class="mn-o">WS-C3750X-48P</td><td>NYC-HQ</td><td><span class="sp sp-cr">88</span></td><td>HW+SW EoL past 3 years</td></tr>
+<tr><td class="mn-o">WLC-01</td><td class="mn-o">AIR-CT5520-K9</td><td>Dallas-DC1</td><td><span class="sp sp-cr">85</span></td><td>HW EoS + Field Notice FN72534</td></tr>
+<tr><td class="mn-o">ACC-SW-14</td><td class="mn-o">WS-C2960X-48FP</td><td>LA-Campus</td><td><span class="sp sp-hi">68</span></td><td>SW EoL + 1 High CVE</td></tr>
+</tbody></table></div></div>
+
+<div class="cd"><div class="cd-h"><span class="cd-t">🤖 AI Alert Feed</span><span class="cd-bd" style="background:var(--greenDim);color:var(--green)">MONITORING</span></div><div class="cd-body">
+<div class="fi-list">
+<div class="fi-item"><div class="fi-ic" style="background:var(--redDim)">🚨</div><div class="fi-bd"><div class="fi-tt">New PSIRT: CVE-2026-20198 — RCE on ASA 9.16.x</div><div class="fi-ds">12 devices affected. Fix available: 9.18.4.34. Auto-remediation queued.</div><div class="fi-mt"><span>12m ago</span><span>·</span><span>PSIRT POLL</span></div></div><div class="fi-sv" style="background:var(--redDim);color:var(--red)">P1</div></div>
+<div class="fi-item"><div class="fi-ic" style="background:var(--amberDim)">⏰</div><div class="fi-bd"><div class="fi-tt">EoS 30-Day Warning: 18× Catalyst 9300 (IOS-XE 17.06)</div><div class="fi-ds">SW maintenance ends 2026-04-17. Upgrade path: 17.12.x</div><div class="fi-mt"><span>2h ago</span><span>·</span><span>EOX CHECK</span></div></div><div class="fi-sv" style="background:var(--amberDim);color:var(--amber)">P2</div></div>
+<div class="fi-item"><div class="fi-ic" style="background:var(--purpleDim)">🔍</div><div class="fi-bd"><div class="fi-tt">Inventory Drift: 6 unknown devices at NYC-HQ</div><div class="fi-ds">MACs indicate Meraki APs. Not in NetBox. Shadow IT suspected.</div><div class="fi-mt"><span>5h ago</span><span>·</span><span>AI ANOMALY</span></div></div><div class="fi-sv" style="background:var(--purpleDim);color:var(--purple)">P3</div></div>
+<div class="fi-item"><div class="fi-ic" style="background:var(--greenDim)">✅</div><div class="fi-bd"><div class="fi-tt">Remediation Complete: 8 devices upgraded IOS-XE 16.x → 17.12.x</div><div class="fi-ds">Dallas-DC1 site risk score improved 68→74. GitLab pipeline #847 succeeded.</div><div class="fi-mt"><span>8h ago</span><span>·</span><span>PIPELINE</span></div></div><div class="fi-sv" style="background:var(--greenDim);color:var(--green)">OK</div></div>
+</div></div></div>
+</div>
+</div>
+
+<!-- ═══ PAGE: INVENTORY ═══ -->
+<div class="pg" id="pg-inv">
+<div class="mg mg4 stg"><div class="mc"><div class="mc-l">Total Devices</div><div class="mc-v">1,247</div></div><div class="mc" style="--glow:var(--cyanDim)"><div class="mc-l">Cisco Devices</div><div class="mc-v" style="--vc:var(--cyan)">1,089</div></div><div class="mc" style="--glow:var(--purpleDim)"><div class="mc-l">Sites</div><div class="mc-v" style="--vc:var(--purple)">14</div></div><div class="mc" style="--glow:var(--greenDim)"><div class="mc-l">Source</div><div class="mc-v" style="--vc:var(--green);font-size:16px">NetBox API</div></div></div>
+<div class="g2 mb">
+<div class="upl"><div class="uic">📄</div><h3>Upload Inventory CSV</h3><p>Drag & drop .csv / .xlsx — auto column mapping</p></div>
+<div class="cd"><div class="cd-h"><span class="cd-t">API Connectors</span></div><div class="cd-body"><div class="fi-list">
+<div class="fi-item"><div class="fi-ic" style="background:var(--cyanDim)">🌐</div><div class="fi-bd"><div class="fi-tt">NetBox</div><div class="fi-ds">REST API — synced 15m ago</div></div><div class="fi-sv" style="background:var(--greenDim);color:var(--green)">LIVE</div></div>
+<div class="fi-item"><div class="fi-ic" style="background:var(--blueDim)">🔗</div><div class="fi-bd"><div class="fi-tt">Cisco DNA Center</div><div class="fi-ds">Device inventory + SW versions</div></div><div class="fi-sv" style="background:var(--greenDim);color:var(--green)">LIVE</div></div>
+<div class="fi-item"><div class="fi-ic" style="background:var(--purpleDim)">📦</div><div class="fi-bd"><div class="fi-tt">ServiceNow CMDB</div><div class="fi-ds">CI records sync</div></div><div class="fi-sv" style="background:var(--amberDim);color:var(--amber)">SETUP</div></div>
+</div></div></div>
+</div>
+<div class="cd mb"><div class="cd-h"><span class="cd-t">Device Inventory</span><div style="display:flex;gap:4px;margin-left:auto"><button class="fc on">All</button><button class="fc">Routers</button><button class="fc">Switches</button><button class="fc">Firewalls</button><button class="fc">Wireless</button><button class="fc">SD-WAN</button></div></div>
+<div class="tbl-wrap" style="max-height:340px"><table class="dt"><thead><tr><th>Hostname</th><th>IP</th><th>Model</th><th>Serial</th><th>IOS/SW</th><th>Site</th><th>Role</th><th>Risk</th></tr></thead><tbody>
+<tr><td class="mn-o">CORE-RTR-01</td><td class="mn-o">10.1.1.1</td><td class="mn-o">ISR4451-X/K9</td><td class="mn-o">FDO2137A8K1</td><td class="mn-o">16.12.4</td><td>Dallas-DC1</td><td>Core</td><td><span class="sp sp-cr">92</span></td></tr>
+<tr><td class="mn-o">CORE-RTR-02</td><td class="mn-o">10.1.1.2</td><td class="mn-o">C8300-2N2S-4T2X</td><td class="mn-o">FDO2341B2P4</td><td class="mn-o">17.12.2</td><td>Dallas-DC1</td><td>Core</td><td><span class="sp sp-ok">12</span></td></tr>
+<tr><td class="mn-o">DIST-SW-03</td><td class="mn-o">10.2.3.10</td><td class="mn-o">WS-C3750X-48P</td><td class="mn-o">FDO1819C3L2</td><td class="mn-o">15.2(4)E10</td><td>NYC-HQ</td><td>Dist</td><td><span class="sp sp-cr">88</span></td></tr>
+<tr><td class="mn-o">FW-EDGE-02</td><td class="mn-o">10.5.1.1</td><td class="mn-o">ASA5525-K9</td><td class="mn-o">JMX2203A1B7</td><td class="mn-o">9.16.4.67</td><td>Chicago-BR</td><td>Edge FW</td><td><span class="sp sp-cr">95</span></td></tr>
+<tr><td class="mn-o">ACC-SW-07</td><td class="mn-o">10.2.4.17</td><td class="mn-o">C9200L-48P-4G</td><td class="mn-o">FDO2445D1K9</td><td class="mn-o">17.09.04a</td><td>NYC-HQ</td><td>Access</td><td><span class="sp sp-lo">28</span></td></tr>
+<tr><td class="mn-o">WLC-01</td><td class="mn-o">10.1.5.10</td><td class="mn-o">AIR-CT5520-K9</td><td class="mn-o">FCW2301B4P8</td><td class="mn-o">8.10.190.0</td><td>Dallas-DC1</td><td>WLC</td><td><span class="sp sp-cr">85</span></td></tr>
+<tr><td class="mn-o">SDWAN-E-04</td><td class="mn-o">10.7.1.4</td><td class="mn-o">C1111-8PLTELA</td><td class="mn-o">FDO2255C7J3</td><td class="mn-o">17.09.05</td><td>Seattle-BR</td><td>SD-WAN</td><td><span class="sp sp-lo">22</span></td></tr>
+</tbody></table></div></div>
+</div>
+
+<!-- ═══ PAGE: HW EOL ═══ -->
+<div class="pg" id="pg-hweol">
+<div class="sh"><h2>Hardware End-of-Life</h2><span class="cd-bd" style="background:var(--amberDim);color:var(--amber)">179 AT RISK</span></div>
+<div class="mg mg4 stg"><div class="mc" style="--glow:var(--redDim)"><div class="mc-l">Past Last-Day-of-Support</div><div class="mc-v" style="--vc:var(--red)">62</div><div class="mc-s">HW replacement required</div></div><div class="mc" style="--glow:var(--amberDim)"><div class="mc-l">Past End-of-Sale</div><div class="mc-v" style="--vc:var(--amber)">74</div></div><div class="mc"><div class="mc-l">EoL Announced</div><div class="mc-v">43</div></div><div class="mc" style="--glow:var(--greenDim)"><div class="mc-l">LDoS in < 12mo</div><div class="mc-v" style="--vc:var(--green)">31</div></div></div>
+<div class="cd mb"><div class="cd-h"><span class="cd-t">Hardware EoL Findings</span></div>
+<div class="tbl-wrap"><table class="dt"><thead><tr><th>Hostname</th><th>PID</th><th>Status</th><th>End-of-Sale</th><th>Last-Day-of-Support</th><th>Days</th><th>Recommended HW</th><th>Action</th></tr></thead><tbody>
+<tr><td class="mn-o">CORE-RTR-01</td><td class="mn-o">ISR4451-X/K9</td><td><span class="sp sp-eol">PAST LDoS</span></td><td class="mn-o">2022-10-31</td><td class="mn-o">2027-10-31</td><td class="mn-o" style="color:var(--amber)">-568d</td><td class="mn-o" style="color:var(--cyan)">C8300-2N2S-4T2X</td><td><span class="sp" style="background:var(--orangeDim);color:var(--orange)">REPLACE</span></td></tr>
+<tr><td class="mn-o">DIST-SW-03</td><td class="mn-o">WS-C3750X-48P</td><td><span class="sp sp-eol">PAST LDoS</span></td><td class="mn-o">2016-10-31</td><td class="mn-o">2021-10-31</td><td class="mn-o" style="color:var(--red)">-1599d</td><td class="mn-o" style="color:var(--cyan)">C9300-48P-A</td><td><span class="sp sp-cr">URGENT</span></td></tr>
+<tr><td class="mn-o">FW-EDGE-02</td><td class="mn-o">ASA5525-K9</td><td><span class="sp sp-eol">PAST LDoS</span></td><td class="mn-o">2022-09-02</td><td class="mn-o">2027-09-30</td><td class="mn-o" style="color:var(--amber)">-535d</td><td class="mn-o" style="color:var(--cyan)">FPR1150-NGFW-K9</td><td><span class="sp" style="background:var(--orangeDim);color:var(--orange)">REPLACE</span></td></tr>
+<tr><td class="mn-o">WLC-01</td><td class="mn-o">AIR-CT5520-K9</td><td><span class="sp sp-eol">PAST LDoS</span></td><td class="mn-o">2021-04-30</td><td class="mn-o">2026-04-30</td><td class="mn-o" style="color:var(--red)">-323d</td><td class="mn-o" style="color:var(--cyan)">C9800-40-K9</td><td><span class="sp sp-cr">URGENT</span></td></tr>
+<tr><td class="mn-o">ACC-SW-14</td><td class="mn-o">WS-C2960X-48FP</td><td><span class="sp sp-eos">END-OF-SALE</span></td><td class="mn-o">2020-10-31</td><td class="mn-o">2025-10-31</td><td class="mn-o" style="color:var(--amber)">-139d</td><td class="mn-o" style="color:var(--cyan)">C9200L-48P-4G</td><td><span class="sp" style="background:var(--orangeDim);color:var(--orange)">PLAN</span></td></tr>
+</tbody></table></div></div>
+</div>
+
+<!-- ═══ PAGE: SW EOL ═══ -->
+<div class="pg" id="pg-sweol">
+<div class="sh"><h2>Software End-of-Life</h2><span class="cd-bd" style="background:var(--amberDim);color:var(--amber)">94 NON-COMPLIANT</span></div>
+<div class="mg mg4 stg"><div class="mc" style="--glow:var(--redDim)"><div class="mc-l">SW Past EoL</div><div class="mc-v" style="--vc:var(--red)">38</div></div><div class="mc" style="--glow:var(--amberDim)"><div class="mc-l">No Security Patches</div><div class="mc-v" style="--vc:var(--amber)">56</div></div><div class="mc"><div class="mc-l">Upgrade Available</div><div class="mc-v">82</div></div><div class="mc" style="--glow:var(--greenDim)"><div class="mc-l">On Golden Image</div><div class="mc-v" style="--vc:var(--green)">78%</div></div></div>
+<div class="cd mb"><div class="cd-h"><span class="cd-t">Software EoL Findings</span></div>
+<div class="tbl-wrap"><table class="dt"><thead><tr><th>Hostname</th><th>Platform</th><th>Current SW</th><th>SW Status</th><th>End-of-Maint</th><th>Recommended SW</th><th>Upgrade Type</th></tr></thead><tbody>
+<tr><td class="mn-o">DIST-SW-03</td><td class="mn-o">C3750X</td><td class="mn-o">15.2(4)E10</td><td><span class="sp sp-eol">EOL</span></td><td class="mn-o">2020-10-31</td><td class="mn-o" style="color:var(--cyan)">N/A — HW Replace</td><td><span class="sp sp-cr">HW REQUIRED</span></td></tr>
+<tr><td class="mn-o">CORE-RTR-01</td><td class="mn-o">ISR4451</td><td class="mn-o">16.12.4</td><td><span class="sp sp-eos">NO PATCHES</span></td><td class="mn-o">2024-04-30</td><td class="mn-o" style="color:var(--cyan)">17.12.4</td><td><span class="sp sp-hi">MAJOR</span></td></tr>
+<tr><td class="mn-o">WLC-01</td><td class="mn-o">CT5520</td><td class="mn-o">8.10.190.0</td><td><span class="sp sp-eol">EOL</span></td><td class="mn-o">2022-03-31</td><td class="mn-o" style="color:var(--cyan)">N/A — HW Replace</td><td><span class="sp sp-cr">HW REQUIRED</span></td></tr>
+<tr><td class="mn-o">ACC-SW-14</td><td class="mn-o">C2960X</td><td class="mn-o">15.2(7)E6</td><td><span class="sp sp-eos">NO PATCHES</span></td><td class="mn-o">2025-04-30</td><td class="mn-o" style="color:var(--cyan)">15.2(7)E9</td><td><span class="sp sp-md">MINOR</span></td></tr>
+<tr><td class="mn-o">ACC-SW-07</td><td class="mn-o">C9200L</td><td class="mn-o">17.09.04a</td><td><span class="sp sp-act">MAINT</span></td><td class="mn-o">2027-10-31</td><td class="mn-o" style="color:var(--cyan)">17.12.4</td><td><span class="sp sp-lo">OPTIONAL</span></td></tr>
+</tbody></table></div></div>
+</div>
+
+<!-- ═══ PAGE: FIELD NOTICES ═══ -->
+<div class="pg" id="pg-fn">
+<div class="sh"><h2>Field Notices</h2><span class="cd-bd" style="background:var(--redDim);color:var(--red)">8 ACTIVE</span></div>
+<div class="mg mg3 stg"><div class="mc" style="--glow:var(--redDim)"><div class="mc-l">HW Failure Risk</div><div class="mc-v" style="--vc:var(--red)">3</div></div><div class="mc" style="--glow:var(--amberDim)"><div class="mc-l">SW Defect</div><div class="mc-v" style="--vc:var(--amber)">4</div></div><div class="mc"><div class="mc-l">Informational</div><div class="mc-v">1</div></div></div>
+<div class="cd mb"><div class="cd-h"><span class="cd-t">Active Field Notices Affecting Your Fleet</span></div>
+<div class="tbl-wrap"><table class="dt"><thead><tr><th>FN ID</th><th>Title</th><th>Type</th><th>Affected</th><th>Severity</th><th>Fix</th></tr></thead><tbody>
+<tr><td class="mn-o">FN72534</td><td>CT5520 Memory Leak Causing Unexpected Reloads</td><td><span class="sp sp-cr">HW FAILURE</span></td><td>3 WLCs</td><td><span class="sp sp-cr">CRITICAL</span></td><td>HW replacement</td></tr>
+<tr><td class="mn-o">FN72501</td><td>C9300 StackPower Cable Overheat Risk</td><td><span class="sp sp-cr">HW FAILURE</span></td><td>12 switches</td><td><span class="sp sp-hi">HIGH</span></td><td>Cable replacement</td></tr>
+<tr><td class="mn-o">FN72488</td><td>ISR4K Boot Loop on IOS-XE 16.12.x</td><td><span class="sp sp-hi">SW DEFECT</span></td><td>8 routers</td><td><span class="sp sp-hi">HIGH</span></td><td>Upgrade to 17.06.7</td></tr>
+<tr><td class="mn-o">FN72445</td><td>ASA SSD Wear-Level Monitoring Alert</td><td><span class="sp sp-md">SW DEFECT</span></td><td>6 firewalls</td><td><span class="sp sp-md">MEDIUM</span></td><td>Patch 9.16.4.70</td></tr>
+</tbody></table></div></div>
+</div>
+
+<!-- ═══ PAGE: SECURITY VULNS ═══ -->
+<div class="pg" id="pg-vuln">
+<div class="sh"><h2>Security Vulnerability Assessment</h2><span class="cd-bd" style="background:var(--redDim);color:var(--red)">23 OPEN CVEs</span></div>
+<div class="mg mg4 stg"><div class="mc" style="--glow:var(--redDim)"><div class="mc-l">Critical (CVSS 9+)</div><div class="mc-v" style="--vc:var(--red)">3</div></div><div class="mc" style="--glow:var(--amberDim)"><div class="mc-l">High (7-8.9)</div><div class="mc-v" style="--vc:var(--amber)">8</div></div><div class="mc"><div class="mc-l">Medium (4-6.9)</div><div class="mc-v">12</div></div><div class="mc" style="--glow:var(--greenDim)"><div class="mc-l">Fix Available</div><div class="mc-v" style="--vc:var(--green)">78%</div></div></div>
+<div class="cd mb"><div class="cd-h"><span class="cd-t">PSIRT Advisory Correlation</span><div style="display:flex;gap:4px;margin-left:auto"><button class="fc on">All</button><button class="fc">Critical</button><button class="fc">Fix Available</button><button class="fc">No Fix</button></div></div>
+<div class="tbl-wrap"><table class="dt"><thead><tr><th>CVE</th><th>CVSS</th><th>Severity</th><th>Advisory</th><th>Devices</th><th>Fix Version</th><th>Status</th></tr></thead><tbody>
+<tr><td class="mn-o">CVE-2026-20198</td><td class="mn-o" style="color:var(--red)">9.8</td><td><span class="sp sp-cr">CRITICAL</span></td><td>cisco-sa-asa-rce-2026</td><td>12 ASAs</td><td class="mn-o">9.18.4.34</td><td><span class="sp sp-ok">FIX AVAIL</span></td></tr>
+<tr><td class="mn-o">CVE-2026-20145</td><td class="mn-o" style="color:var(--red)">9.1</td><td><span class="sp sp-cr">CRITICAL</span></td><td>cisco-sa-iosxe-webui</td><td>8 ISRs</td><td class="mn-o">17.12.4</td><td><span class="sp sp-ok">FIX AVAIL</span></td></tr>
+<tr><td class="mn-o">CVE-2025-20391</td><td class="mn-o" style="color:var(--red)">9.0</td><td><span class="sp sp-cr">CRITICAL</span></td><td>cisco-sa-sdwan-priv</td><td>4 vEdge</td><td class="mn-o">20.12.3</td><td><span class="sp sp-hi">PENDING</span></td></tr>
+<tr><td class="mn-o">CVE-2026-20067</td><td class="mn-o" style="color:var(--amber)">7.5</td><td><span class="sp sp-hi">HIGH</span></td><td>cisco-sa-wlc-dos</td><td>3 WLCs</td><td class="mn-o">17.09.06</td><td><span class="sp sp-ok">FIX AVAIL</span></td></tr>
+<tr><td class="mn-o">CVE-2025-20288</td><td class="mn-o" style="color:var(--amber)">7.2</td><td><span class="sp sp-hi">HIGH</span></td><td>cisco-sa-snmp-bypass</td><td>34 switches</td><td class="mn-o">15.2(7)E8</td><td><span class="sp sp-ok">FIX AVAIL</span></td></tr>
+</tbody></table></div></div>
+</div>
+
+<!-- ═══ PAGE: SW CONFORMANCE ═══ -->
+<div class="pg" id="pg-swconf">
+<div class="sh"><h2>Software Conformance</h2><span class="cd-bd" style="background:var(--amberDim);color:var(--amber)">67 NON-CONFORMANT</span></div>
+<div class="mg mg4 stg"><div class="mc" style="--glow:var(--greenDim)"><div class="mc-l">On Golden Image</div><div class="mc-v" style="--vc:var(--green)">946</div></div><div class="mc" style="--glow:var(--amberDim)"><div class="mc-l">Below Standard</div><div class="mc-v" style="--vc:var(--amber)">67</div></div><div class="mc"><div class="mc-l">Cisco Suggested</div><div class="mc-v">1,089</div></div><div class="mc" style="--glow:var(--blueDim)"><div class="mc-l">Conformance Rate</div><div class="mc-v" style="--vc:var(--blue)">93.4%</div></div></div>
+<div class="cd mb"><div class="cd-h"><span class="cd-t">Golden Image Policy Compliance</span></div>
+<div class="tbl-wrap"><table class="dt"><thead><tr><th>Platform Family</th><th>Golden Image</th><th>Total</th><th>Compliant</th><th>Non-Compliant</th><th>Rate</th></tr></thead><tbody>
+<tr><td>Catalyst 9300</td><td class="mn-o">17.12.04</td><td>142</td><td style="color:var(--green)">134</td><td style="color:var(--amber)">8</td><td><div class="pbar"><div class="pbar-f" style="width:94%;background:var(--green)"></div></div></td></tr>
+<tr><td>Catalyst 9200</td><td class="mn-o">17.09.06</td><td>98</td><td style="color:var(--green)">91</td><td style="color:var(--amber)">7</td><td><div class="pbar"><div class="pbar-f" style="width:93%;background:var(--green)"></div></div></td></tr>
+<tr><td>ISR 4000</td><td class="mn-o">17.12.04</td><td>34</td><td style="color:var(--green)">22</td><td style="color:var(--red)">12</td><td><div class="pbar"><div class="pbar-f" style="width:65%;background:var(--amber)"></div></div></td></tr>
+<tr><td>ASA 5500-X</td><td class="mn-o">9.18.4.34</td><td>28</td><td style="color:var(--green)">16</td><td style="color:var(--red)">12</td><td><div class="pbar"><div class="pbar-f" style="width:57%;background:var(--red)"></div></div></td></tr>
+<tr><td>C8300</td><td class="mn-o">17.12.04</td><td>18</td><td style="color:var(--green)">18</td><td style="color:var(--green)">0</td><td><div class="pbar"><div class="pbar-f" style="width:100%;background:var(--green)"></div></div></td></tr>
+</tbody></table></div></div>
+</div>
+
+<!-- ═══ PAGE: NETWORK HEALTH ═══ -->
+<div class="pg" id="pg-health">
+<div class="sh"><h2>Network Health Checks</h2><span class="cd-bd" style="background:var(--greenDim);color:var(--green)">MONITORING ACTIVE</span></div>
+<div class="mg mg6 stg">
+<div class="mc" style="--glow:var(--greenDim)"><div class="mc-l">Overall Health</div><div class="mc-v" style="--vc:var(--green)">89%</div></div>
+<div class="mc"><div class="mc-l">High CPU (>80%)</div><div class="mc-v" style="--vc:var(--red)">4</div></div>
+<div class="mc"><div class="mc-l">High Memory</div><div class="mc-v" style="--vc:var(--amber)">7</div></div>
+<div class="mc"><div class="mc-l">Interface Errors</div><div class="mc-v" style="--vc:var(--orange)">12</div></div>
+<div class="mc"><div class="mc-l">Device Crashes (30d)</div><div class="mc-v" style="--vc:var(--red)">3</div></div>
+<div class="mc"><div class="mc-l">Link Flaps (24h)</div><div class="mc-v" style="--vc:var(--amber)">8</div></div>
+</div>
+<div class="cd mb"><div class="cd-h"><span class="cd-t">Device Health Summary</span></div>
+<div class="tbl-wrap"><table class="dt"><thead><tr><th>Hostname</th><th>CPU %</th><th>RAM %</th><th>Intf Errors</th><th>Uptime</th><th>Crashes</th><th>Link Flaps</th><th>Health</th></tr></thead><tbody>
+<tr><td class="mn-o">CORE-RTR-01</td><td class="mn-o" style="color:var(--red)">87%</td><td class="mn-o" style="color:var(--amber)">78%</td><td class="mn-o">0</td><td class="mn-o">342d</td><td>0</td><td>0</td><td><span class="sp sp-hi">WARN</span></td></tr>
+<tr><td class="mn-o">DIST-SW-03</td><td class="mn-o">42%</td><td class="mn-o">61%</td><td class="mn-o" style="color:var(--red)">1,247</td><td class="mn-o">89d</td><td style="color:var(--red)">2</td><td style="color:var(--amber)">5</td><td><span class="sp sp-cr">CRITICAL</span></td></tr>
+<tr><td class="mn-o">ACC-SW-07</td><td class="mn-o">18%</td><td class="mn-o">34%</td><td class="mn-o">0</td><td class="mn-o">187d</td><td>0</td><td>0</td><td><span class="sp sp-ok">HEALTHY</span></td></tr>
+<tr><td class="mn-o">FW-EDGE-02</td><td class="mn-o" style="color:var(--amber)">72%</td><td class="mn-o" style="color:var(--red)">84%</td><td class="mn-o">3</td><td class="mn-o">456d</td><td>0</td><td>1</td><td><span class="sp sp-hi">WARN</span></td></tr>
+<tr><td class="mn-o">WLC-01</td><td class="mn-o">55%</td><td class="mn-o" style="color:var(--amber)">76%</td><td class="mn-o">0</td><td class="mn-o">23d</td><td style="color:var(--red)">1</td><td>0</td><td><span class="sp sp-hi">WARN</span></td></tr>
+</tbody></table></div></div>
+</div>
+
+<!-- ═══ PAGE: CONFIG MANAGEMENT ═══ -->
+<div class="pg" id="pg-config">
+<div class="sh"><h2>Configuration Management</h2></div>
+<div class="mg mg4 stg"><div class="mc" style="--glow:var(--greenDim)"><div class="mc-l">Configs Backed Up</div><div class="mc-v" style="--vc:var(--green)">1,198</div></div><div class="mc" style="--glow:var(--amberDim)"><div class="mc-l">Config Drift Detected</div><div class="mc-v" style="--vc:var(--amber)">34</div></div><div class="mc" style="--glow:var(--redDim)"><div class="mc-l">Policy Violations</div><div class="mc-v" style="--vc:var(--red)">18</div></div><div class="mc"><div class="mc-l">Last Backup</div><div class="mc-v" style="font-size:14px">2h ago</div></div></div>
+<div class="g2">
+<div class="cd"><div class="cd-h"><span class="cd-t">Golden Config Policy Violations</span></div>
+<div class="tbl-wrap"><table class="dt"><thead><tr><th>Policy Rule</th><th>Violations</th><th>Severity</th><th>Auto-Fix</th></tr></thead><tbody>
+<tr><td>SNMPv2c with default community</td><td style="color:var(--red)">14</td><td><span class="sp sp-hi">HIGH</span></td><td><span class="sp sp-ok">YES</span></td></tr>
+<tr><td>No SSH key authentication</td><td style="color:var(--amber)">8</td><td><span class="sp sp-md">MEDIUM</span></td><td><span class="sp sp-ok">YES</span></td></tr>
+<tr><td>Missing NTP server config</td><td style="color:var(--amber)">6</td><td><span class="sp sp-md">MEDIUM</span></td><td><span class="sp sp-ok">YES</span></td></tr>
+<tr><td>No login banner</td><td>4</td><td><span class="sp sp-lo">LOW</span></td><td><span class="sp sp-ok">YES</span></td></tr>
+<tr><td>Telnet enabled</td><td style="color:var(--red)">2</td><td><span class="sp sp-cr">CRITICAL</span></td><td><span class="sp sp-ok">YES</span></td></tr>
+</tbody></table></div></div>
+
+<div class="cd"><div class="cd-h"><span class="cd-t">Recent Config Diffs</span></div><div class="cd-body">
+<div class="fi-list">
+<div class="fi-item"><div class="fi-ic" style="background:var(--amberDim)">📝</div><div class="fi-bd"><div class="fi-tt">CORE-RTR-01 — 14 lines changed</div><div class="fi-ds">ACL modification: added permit 10.99.0.0/16 to ACL MGMT-IN. Drift from golden config.</div><div class="fi-mt"><span>4h ago</span><span>·</span><span>Backed up → Git</span></div></div></div>
+<div class="fi-item"><div class="fi-ic" style="background:var(--redDim)">⚠️</div><div class="fi-bd"><div class="fi-tt">FW-EDGE-02 — NAT rule removed</div><div class="fi-ds">Object-group "DMZ-SERVERS" modified. 3 static NAT entries deleted. Possible outage risk.</div><div class="fi-mt"><span>8h ago</span><span>·</span><span>Alert sent</span></div></div></div>
+<div class="fi-item"><div class="fi-ic" style="background:var(--greenDim)">✅</div><div class="fi-bd"><div class="fi-tt">ACC-SW-07 — Golden config applied</div><div class="fi-ds">Auto-remediation applied SNMPv3 config. Policy compliance restored.</div><div class="fi-mt"><span>1d ago</span><span>·</span><span>Pipeline #842</span></div></div></div>
+</div></div></div>
+</div>
+</div>
+
+<!-- ═══ PAGE: REMEDIATION ═══ -->
+<div class="pg" id="pg-remed">
+<div class="sh"><h2>Remediation Pipeline</h2><span class="cd-bd" style="background:var(--orangeDim);color:var(--orange)">12 PENDING</span></div>
+<div class="mg mg4 stg"><div class="mc" style="--glow:var(--redDim)"><div class="mc-l">Pending Fixes</div><div class="mc-v" style="--vc:var(--red)">12</div></div><div class="mc" style="--glow:var(--amberDim)"><div class="mc-l">In Pipeline</div><div class="mc-v" style="--vc:var(--amber)">3</div></div><div class="mc" style="--glow:var(--greenDim)"><div class="mc-l">Completed (30d)</div><div class="mc-v" style="--vc:var(--green)">47</div></div><div class="mc"><div class="mc-l">KB Articles Used</div><div class="mc-v">28</div></div></div>
+
+<div class="sh" style="margin-top:8px"><h2 style="font-size:13px">Pipeline Flow</h2></div>
+<div class="pipe">
+<div class="pipe-s"><div class="pipe-n"><span class="pipe-sn">STEP 1</span><span class="pipe-nm">Issue Detected</span><span class="pipe-dt">AI / Monitor</span></div><div class="pipe-c"></div></div>
+<div class="pipe-s"><div class="pipe-n"><span class="pipe-sn">STEP 2</span><span class="pipe-nm">AI Analysis</span><span class="pipe-dt">Gather Facts</span></div><div class="pipe-c"></div></div>
+<div class="pipe-s"><div class="pipe-n"><span class="pipe-sn">STEP 3</span><span class="pipe-nm">Generate Fix</span><span class="pipe-dt">Config / SW / HW</span></div><div class="pipe-c"></div></div>
+<div class="pipe-s"><div class="pipe-n"><span class="pipe-sn">STEP 4</span><span class="pipe-nm">Approve</span><span class="pipe-dt">Engineer Review</span></div><div class="pipe-c"></div></div>
+<div class="pipe-s"><div class="pipe-n"><span class="pipe-sn">STEP 5</span><span class="pipe-nm">Execute</span><span class="pipe-dt">GitLab CI/CD</span></div><div class="pipe-c"></div></div>
+<div class="pipe-s"><div class="pipe-n"><span class="pipe-sn">STEP 6</span><span class="pipe-nm">Verify</span><span class="pipe-dt">Post-check</span></div><div class="pipe-c"></div></div>
+<div class="pipe-s"><div class="pipe-n"><span class="pipe-sn">STEP 7</span><span class="pipe-nm">KB Update</span><span class="pipe-dt">Learn & Store</span></div></div>
+</div>
+
+<div class="cd mb"><div class="cd-h"><span class="cd-t">Active Remediation Queue</span></div>
+<div class="tbl-wrap"><table class="dt"><thead><tr><th>ID</th><th>Issue</th><th>Target</th><th>Fix Type</th><th>Method</th><th>Status</th><th>GitLab</th></tr></thead><tbody>
+<tr><td class="mn-o">REM-001</td><td>CVE-2026-20198 — ASA RCE</td><td>12 ASA devices</td><td><span class="sp" style="background:var(--cyanDim);color:var(--cyan)">SW UPGRADE</span></td><td class="mn-o">Ansible</td><td><span class="sp sp-hi">IN PIPELINE</span></td><td class="mn-o">#851</td></tr>
+<tr><td class="mn-o">REM-002</td><td>SNMPv2c default community</td><td>14 switches</td><td><span class="sp" style="background:var(--purpleDim);color:var(--purple)">CONFIG FIX</span></td><td class="mn-o">Python/Netmiko</td><td><span class="sp sp-hi">IN PIPELINE</span></td><td class="mn-o">#852</td></tr>
+<tr><td class="mn-o">REM-003</td><td>IOS-XE 16.12.x Boot Loop (FN72488)</td><td>8 ISR routers</td><td><span class="sp" style="background:var(--cyanDim);color:var(--cyan)">SW UPGRADE</span></td><td class="mn-o">Ansible</td><td><span class="sp sp-hi">IN PIPELINE</span></td><td class="mn-o">#853</td></tr>
+<tr><td class="mn-o">REM-004</td><td>WS-C3750X Past LDoS</td><td>DIST-SW-03</td><td><span class="sp sp-cr">HW REPLACE</span></td><td class="mn-o">Manual + Ansible</td><td><span class="sp sp-md">APPROVED</span></td><td class="mn-o">—</td></tr>
+<tr><td class="mn-o">REM-005</td><td>Missing NTP config</td><td>6 devices</td><td><span class="sp" style="background:var(--purpleDim);color:var(--purple)">CONFIG FIX</span></td><td class="mn-o">Python/Netmiko</td><td><span class="sp sp-lo">PENDING</span></td><td class="mn-o">—</td></tr>
+</tbody></table></div></div>
+</div>
+
+<!-- ═══ PAGE: KNOWLEDGE BASE ═══ -->
+<div class="pg" id="pg-kb">
+<div class="sh"><h2>Knowledge Base</h2><span class="cd-bd" style="background:var(--greenDim);color:var(--green)">142 ARTICLES</span></div>
+<div class="mg mg3 stg"><div class="mc"><div class="mc-l">Total KB Articles</div><div class="mc-v">142</div></div><div class="mc" style="--glow:var(--greenDim)"><div class="mc-l">Auto-Applied (30d)</div><div class="mc-v" style="--vc:var(--green)">28</div></div><div class="mc" style="--glow:var(--blueDim)"><div class="mc-l">AI Generated</div><div class="mc-v" style="--vc:var(--blue)">89</div></div></div>
+<div style="display:flex;gap:4px;margin-bottom:14px"><button class="fc on">All</button><button class="fc">Config Fix</button><button class="fc">SW Upgrade</button><button class="fc">HW Replace</button><button class="fc">Security</button><button class="fc">Best Practice</button></div>
+<div class="g3">
+<div class="kb-card"><div style="display:flex;gap:4px;margin-bottom:8px"><span class="kb-tag" style="background:var(--redDim);color:var(--red)">SECURITY</span><span class="kb-tag" style="background:var(--cyanDim);color:var(--cyan)">SW UPGRADE</span></div><div style="font-size:12px;font-weight:600;margin-bottom:4px">ASA RCE Fix: Upgrade 9.16.x → 9.18.4.34</div><div style="font-size:10px;color:var(--t2);line-height:1.5">Ansible playbook to upgrade ASA firmware addressing CVE-2026-20198. Includes pre/post checks, failover handling, and rollback procedure.</div><div style="font-size:9px;color:var(--t3);margin-top:6px">Applied 12 times · Last: 2h ago · Auto-applicable</div></div>
+<div class="kb-card"><div style="display:flex;gap:4px;margin-bottom:8px"><span class="kb-tag" style="background:var(--purpleDim);color:var(--purple)">CONFIG FIX</span><span class="kb-tag" style="background:var(--greenDim);color:var(--green)">BEST PRACTICE</span></div><div style="font-size:12px;font-weight:600;margin-bottom:4px">SNMPv2c → SNMPv3 Migration</div><div style="font-size:10px;color:var(--t2);line-height:1.5">Netmiko script to replace SNMPv2c community strings with SNMPv3 auth+priv. Covers IOS, IOS-XE, NX-OS. Tested on 200+ devices.</div><div style="font-size:9px;color:var(--t3);margin-top:6px">Applied 34 times · Last: 1d ago · Auto-applicable</div></div>
+<div class="kb-card"><div style="display:flex;gap:4px;margin-bottom:8px"><span class="kb-tag" style="background:var(--orangeDim);color:var(--orange)">HW REPLACE</span></div><div style="font-size:12px;font-weight:600;margin-bottom:4px">ISR4451 → C8300 Migration Guide</div><div style="font-size:10px;color:var(--t2);line-height:1.5">Complete migration playbook: VRF-Lite config conversion, eBGP peering setup, sub-interface mapping, and license migration steps for IOS-XE 17.12.x.</div><div style="font-size:9px;color:var(--t3);margin-top:6px">Referenced 8 times · Manual execution</div></div>
+<div class="kb-card"><div style="display:flex;gap:4px;margin-bottom:8px"><span class="kb-tag" style="background:var(--cyanDim);color:var(--cyan)">SW UPGRADE</span></div><div style="font-size:12px;font-weight:600;margin-bottom:4px">C9300 IOS-XE 17.06 → 17.12 Upgrade</div><div style="font-size:10px;color:var(--t2);line-height:1.5">Ansible playbook: ISSU upgrade path for Catalyst 9300 stacks. Handles StackWise compatibility, boot variable, and install mode conversion.</div><div style="font-size:9px;color:var(--t3);margin-top:6px">Applied 18 times · Last: 8h ago · Auto-applicable</div></div>
+<div class="kb-card"><div style="display:flex;gap:4px;margin-bottom:8px"><span class="kb-tag" style="background:var(--purpleDim);color:var(--purple)">CONFIG FIX</span></div><div style="font-size:12px;font-weight:600;margin-bottom:4px">NTP + Syslog Hardening Template</div><div style="font-size:10px;color:var(--t2);line-height:1.5">Golden config snippet for NTP authentication, syslog TLS, and logging best practices. Jinja2 template compatible with Nornir and Ansible.</div><div style="font-size:9px;color:var(--t3);margin-top:6px">Applied 22 times · Auto-applicable</div></div>
+<div class="kb-card"><div style="display:flex;gap:4px;margin-bottom:8px"><span class="kb-tag" style="background:var(--redDim);color:var(--red)">SECURITY</span></div><div style="font-size:12px;font-weight:600;margin-bottom:4px">Disable Telnet + Enable SSH Hardening</div><div style="font-size:10px;color:var(--t2);line-height:1.5">Netmiko script: disable vty telnet, enable SSH v2, configure RSA 4096-bit keys, set login timeout and retry limits.</div><div style="font-size:9px;color:var(--t3);margin-top:6px">Applied 14 times · Auto-applicable</div></div>
+</div>
+</div>
+
+<!-- ═══ PAGE: REPORTS ═══ -->
+<div class="pg" id="pg-rpt">
+<div class="sh"><h2>Report Generation</h2></div>
+<div class="mg mg3 stg"><div class="mc"><div class="mc-l">Reports Generated</div><div class="mc-v">24</div></div><div class="mc" style="--glow:var(--greenDim)"><div class="mc-l">Delivered</div><div class="mc-v" style="--vc:var(--green)">22</div></div><div class="mc"><div class="mc-l">Formats</div><div class="mc-v" style="font-size:14px">PDF · DOCX · MD</div></div></div>
+<div class="cd mb"><div class="cd-h"><span class="cd-t">Report History</span><div style="margin-left:auto"><button class="tb-btn pr">+ Generate Report</button></div></div>
+<table class="dt"><thead><tr><th>Report</th><th>Type</th><th>Format</th><th>Generated</th><th>Devices</th><th>Status</th></tr></thead><tbody>
+<tr><td>Q1 2026 Lifecycle Risk Assessment</td><td><span class="sp sp-hi">EXECUTIVE</span></td><td class="mn-o">PDF</td><td class="mn-o">2026-03-18 09:14</td><td>1,247</td><td><span class="sp sp-ok">DELIVERED</span></td></tr>
+<tr><td>Q1 2026 Technical Findings</td><td><span class="sp sp-lo">TECHNICAL</span></td><td class="mn-o">DOCX</td><td class="mn-o">2026-03-18 09:14</td><td>1,247</td><td><span class="sp sp-ok">DELIVERED</span></td></tr>
+<tr><td>PSIRT Emergency: CVE-2026-20198</td><td><span class="sp sp-cr">ADVISORY</span></td><td class="mn-o">PDF</td><td class="mn-o">2026-03-18 08:02</td><td>12</td><td><span class="sp sp-ok">DELIVERED</span></td></tr>
+<tr><td>Network Health Weekly Summary</td><td><span class="sp sp-md">HEALTH</span></td><td class="mn-o">MD</td><td class="mn-o">2026-03-17 08:00</td><td>1,247</td><td><span class="sp sp-ok">DELIVERED</span></td></tr>
+<tr><td>Config Compliance Audit</td><td><span class="sp" style="background:var(--purpleDim);color:var(--purple)">COMPLIANCE</span></td><td class="mn-o">PDF</td><td class="mn-o">2026-03-15 14:30</td><td>1,247</td><td><span class="sp sp-ok">DELIVERED</span></td></tr>
+</tbody></table></div>
+</div>
+
+<!-- ═══ PAGE: AI ASSISTANT ═══ -->
+<div class="pg" id="pg-ai">
+<div class="sh"><h2>AI Network Intelligence Assistant</h2><span class="cd-bd" style="background:var(--greenDim);color:var(--green)">CLAUDE ONLINE</span></div>
+<div class="g2">
+<div class="ai-p" style="height:480px">
+<div class="ai-hd"><div class="ai-dot"></div><span style="font-size:12px;font-weight:600">CX NetIntel Agent</span><span style="font-family:'Geist Mono',monospace;font-size:8px;color:var(--t3);margin-left:auto">claude-sonnet-4</span></div>
+<div class="ai-ms" id="aiMsgs">
+<div class="ai-m ast"><span class="al">ASSISTANT</span>I have access to Acme Corp's full inventory (1,247 devices), EoL status, PSIRT advisories, health metrics, config backups, and the remediation knowledge base. I can analyze risks, generate fixes, create reports, and queue remediation pipelines. What do you need?</div>
+<div class="ai-m usr">Find all devices that need both HW replacement AND have unpatched critical CVEs. Prioritize by site impact.</div>
+<div class="ai-m ast"><span class="al">ASSISTANT</span>Found <strong>6 devices</strong> requiring HW replacement with unpatched critical CVEs:<br><br><strong>Dallas-DC1 (3 devices — highest impact):</strong><br>• CORE-RTR-01 (ISR4451) — LDoS passed, CVE-2026-20145 (9.1). Replace with C8300. KB: ISR4451→C8300 migration guide available.<br>• WLC-01 (CT5520) — LDoS passed, FN72534 + CVE-2026-20067 (7.5). Replace with C9800-40-K9.<br>• FW-DMZ-01 (ASA5515) — LDoS passed, CVE-2026-20198 (9.8). Replace with FPR1120.<br><br><strong>NYC-HQ (2 devices):</strong><br>• DIST-SW-03 (WS-C3750X) — LDoS 3yr ago, CVE-2025-20288 (7.2). Replace with C9300-48P.<br>• DIST-SW-04 (WS-C3750X) — same profile. Batch with DIST-SW-03.<br><br><strong>Chicago-BR (1 device):</strong><br>• FW-EDGE-02 (ASA5525) — CVE-2026-20198 (9.8). Replace with FPR1150.<br><br><strong>Est. total: $78,400.</strong> Shall I generate the procurement BOM and queue the migration playbooks from the knowledge base?</div>
+</div>
+<div class="ai-ir"><input class="ai-in" id="aiIn" placeholder="Ask about inventory, risks, configs, remediation..." onkeydown="if(event.key==='Enter')sendMsg()"/><button class="ai-sn" onclick="sendMsg()">Send</button></div>
+</div>
+<div>
+<div class="sh"><h2 style="font-size:13px">Quick Actions</h2></div>
+<div class="fi-list">
+<div class="fi-item" onclick="setQ('Generate executive risk report with financial impact')"><div class="fi-ic" style="background:var(--blueDim)">📊</div><div class="fi-bd"><div class="fi-tt">Executive Risk Report</div><div class="fi-ds">Full risk posture + budget impact + action timeline</div></div></div>
+<div class="fi-item" onclick="setQ('Show all devices running EoL software with upgrade paths')"><div class="fi-ic" style="background:var(--amberDim)">💿</div><div class="fi-bd"><div class="fi-tt">SW Upgrade Planning</div><div class="fi-ds">Map upgrade paths for all non-compliant software</div></div></div>
+<div class="fi-item" onclick="setQ('Create remediation playbook for all config policy violations')"><div class="fi-ic" style="background:var(--purpleDim)">🔧</div><div class="fi-bd"><div class="fi-tt">Auto-Generate Remediation</div><div class="fi-ds">Config fixes from knowledge base → GitLab pipeline</div></div></div>
+<div class="fi-item" onclick="setQ('Compare current health metrics vs last month - show regressions')"><div class="fi-ic" style="background:var(--greenDim)">💓</div><div class="fi-bd"><div class="fi-tt">Health Trend Analysis</div><div class="fi-ds">CPU, RAM, errors, crashes — trend comparison</div></div></div>
+<div class="fi-item" onclick="setQ('What devices were affected by the most recent PSIRT advisory?')"><div class="fi-ic" style="background:var(--redDim)">🛡️</div><div class="fi-bd"><div class="fi-tt">Latest PSIRT Impact</div><div class="fi-ds">Match newest advisory against your fleet</div></div></div>
+<div class="fi-item" onclick="setQ('Run config diff for all devices that changed in the last 24 hours')"><div class="fi-ic" style="background:var(--orangeDim)">⚙️</div><div class="fi-bd"><div class="fi-tt">Config Change Audit</div><div class="fi-ds">Diff analysis with golden config policy check</div></div></div>
+</div>
+</div>
+</div>
+</div>
+
+</main>
+</div>
+
+<script>
+const titles={cmd:['Command Center','ACME CORP › OVERVIEW'],inv:['Inventory Management','ACME CORP › ASSETS'],hweol:['Hardware End-of-Life','ACME CORP › HW EOL'],sweol:['Software End-of-Life','ACME CORP › SW EOL'],fn:['Field Notices','ACME CORP › FIELD NOTICES'],vuln:['Security Vulnerabilities','ACME CORP › PSIRT'],swconf:['Software Conformance','ACME CORP › SW POLICY'],health:['Network Health','ACME CORP › HEALTH CHECKS'],config:['Config Management','ACME CORP › CONFIGURATION'],remed:['Remediation Pipeline','ACME CORP › REMEDIATION'],kb:['Knowledge Base','PLATFORM › KB ARTICLES'],rpt:['Report Generation','ACME CORP › REPORTS'],ai:['AI Assistant','ACME CORP › INTELLIGENCE']};
+function nav(id,el){document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.ni').forEach(n=>n.classList.remove('on'));document.getElementById('pg-'+id).classList.add('on');if(el)el.classList.add('on');const t=titles[id]||['',''];document.getElementById('pTitle').textContent=t[0];document.getElementById('pCrumb').textContent=t[1]}
+
+// Bar chart
+const sd=[{s:'Dallas',c:12,h:28,m:45},{s:'NYC',c:8,h:22,m:38},{s:'Chicago',c:6,h:18,m:32},{s:'LA',c:5,h:14,m:28},{s:'Seattle',c:3,h:12,m:22},{s:'Austin',c:4,h:10,m:18},{s:'Denver',c:2,h:8,m:15},{s:'Miami',c:3,h:6,m:12}];
+const mx=Math.max(...sd.map(d=>d.c+d.h+d.m));const sc=document.getElementById('sChart');
+sd.forEach(d=>{const t=d.c+d.h+d.m;const h=(t/mx)*130;const cH=(d.c/t)*h;const hH=(d.h/t)*h;const mH=(d.m/t)*h;sc.innerHTML+=`<div class="bc-g"><div style="display:flex;flex-direction:column;width:100%;height:${h}px"><div class="bar" style="height:${mH}px;background:rgba(251,146,60,.5);border-radius:3px 3px 0 0"><div class="bar-v">${t}</div></div><div class="bar" style="height:${hH}px;background:var(--amber)"></div><div class="bar" style="height:${cH}px;background:var(--red)"></div></div><div class="bc-l">${d.s}</div></div>`});
+
+// AI chat
+function sendMsg(){const i=document.getElementById('aiIn');const v=i.value.trim();if(!v)return;const m=document.getElementById('aiMsgs');m.innerHTML+=`<div class="ai-m usr">${v}</div><div class="ai-m ast"><span class="al">ASSISTANT</span>Analyzing your request across 1,247 devices... In production, this triggers the Claude API with full inventory context, cross-referencing the EoL database, PSIRT findings, health metrics, and the knowledge base to generate actionable intelligence.</div>`;i.value='';m.scrollTop=m.scrollHeight}
+function setQ(t){nav('ai',document.querySelectorAll('.ni')[12]);document.getElementById('aiIn').value=t;document.getElementById('aiIn').focus()}
+
+// Filter chips
+document.querySelectorAll('.fc').forEach(c=>c.addEventListener('click',function(){this.parentElement.querySelectorAll('.fc').forEach(x=>x.classList.remove('on'));this.classList.add('on')}));
+</script>
